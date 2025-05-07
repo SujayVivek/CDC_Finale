@@ -1,60 +1,61 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define mod 1000000007
-#define ff first
-#define ss second
-typedef vector<vector<long long>> vvi;
-typedef vector<long long> vi;
 #define int long long
-#define endl "\n"
+#define endl '\n'
 
 void Solve() {
-    int n; string s; cin>>n>>s;
-    vi hash_a(26, 0);
-    for(int i = 0; i<n; i++) hash_a[s[i]-'a']++;
-    vector<pair<int,int>> hash_b(n+1, 0);
-    for(int i = 0; i<26; i++) {
-        pair<int,int> f = hash_b[hash_a[i]];
-        f.first+=1; f.second = hash_a[i];
-        hash_b[hash_a[i]] = f;
-    }
-    sort(hash_b.begin(), hash_b.end(), greater<int>());
-    for(int i = 0; i<n; i++){
-        if(n%hash_b[i].second) continue;
-        int f = hash_b[i].first, s = hash_b[i].second;
-        int needed_char = 0;
-        int change_tot = 0;
-        for(int i = 0; i<26; i++){
-            int changes = 0;
-            if(hash_a[i]<s && !needed_char){
-                needed_char = s-hash_a[i];
-            }else if(hash_a[i]>s && !needed_char){
-                needed_char = s-(hash_a[i]-s);
-            }else if(hash_a[i]<s && needed_char){
-                int new_num = max(0, hash_a[i]-needed_char); changes = hash_a[i]-new_num;
-                needed_char-=changes;
-                hash_a[i] = new_num;
-                if(hash_a[i]) needed_char = s-hash_a[i];
-            }else if(hash_a[i]>s && needed_char){
-                int new_needed = max(0, needed_char - (hash_a[i]-s));
-                if(new_needed){
-                    needed_char = new_needed;
-                }else{
-                    needed_char = hash_a[i]-s-needed_char;
-                }
-                hash_a[i] = s;
-                
+    int n;
+    string s;
+    cin >> n >> s;
+    vector<int> freq(26, 0);
+    for (char c : s) freq[c - 'a']++;
+    int min_changes = LLONG_MAX;
+    string best_ans;
+    for (int k = 1; k <= 26; ++k) {
+        if (n % k != 0) continue;
+        int target = n / k;
+        vector<pair<int, int>> count;
+        for (int i = 0; i < 26; ++i)
+            count.emplace_back(freq[i], i);
+        sort(count.rbegin(), count.rend());  
+        vector<int> needed(26, 0);
+        for (int i = 0; i < k; ++i)
+            needed[count[i].second] = target;
+        vector<int> current_needed = needed;
+        string t = s;
+        for (int i = 0; i < n; ++i) {
+            int c = s[i] - 'a';
+            if (current_needed[c] > 0) {
+                current_needed[c]--;
+            } else {
+                t[i] = '#'; 
             }
-            change_tot+= changes;
+        }
+        int ptr = 0;
+        for (int i = 0; i < n; ++i) {
+            if (t[i] != '#') continue;
+            while (ptr < 26 && current_needed[ptr] == 0) ++ptr;
+            t[i] = 'a' + ptr;
+            current_needed[ptr]--;
+        }
+        int changes = 0;
+        for (int i = 0; i < n; ++i)
+            if (t[i] != s[i]) ++changes;
+        if (changes < min_changes) {
+            min_changes = changes;
+            best_ans = t;
         }
     }
+
+    cout << min_changes << endl;
+    cout << best_ans << endl;
 }
 
 int32_t main() {
-    int tt_ = 1;
-    cin >> tt_;
-    while (tt_--) {
-        Solve();
-    }
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t;
+    cin >> t;
+    while (t--) Solve();
     return 0;
 }
