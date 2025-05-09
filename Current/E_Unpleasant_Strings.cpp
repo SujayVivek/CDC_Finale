@@ -22,18 +22,22 @@ void Solve() {
         bool ok = true;
         for(int i = 0; i<S.length(); i++){
             int dist = lower_bound(char_pos[S[i]-'a'].begin(), char_pos[S[i]-'a'].end(), cur_idx+1) - char_pos[S[i]-'a'].begin();
-            cout<<i+1<<" "<<dist<<endl;
-            if(dist-1>=char_pos[S[i]].size()){
+            // cout<<i+1<<" "<<dist<<" "<<cur_idx<<endl;
+
+            if(dist>=char_pos[S[i]-'a'].size()){
                 ok = false;
+                // cout<<"HI"<<endl;
                 cout<<0<<endl; break;
             }
             cur_idx = char_pos[S[i]-'a'][dist];
+            // cout<<"cur idx = "<<cur_idx<<endl;
         }
         if(ok){
             int mn = 1e18;
             for(int i = 0; i<k; i++){
-                int dist = n-(lower_bound(char_pos[i].begin(), char_pos[i].end(), cur_idx + 1)-char_pos[i].begin());
-                mn = min(mn, dist);
+                int dist = distance(lower_bound(char_pos[i].begin(), char_pos[i].end(), cur_idx+1), char_pos[i].end());
+                cout<<dist<<" = dist"<<endl;
+                mn = min(mn, dist+1);
             }
             cout<<mn<<endl;
         }
