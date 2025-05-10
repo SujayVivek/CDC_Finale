@@ -10,39 +10,29 @@ typedef vector<long long> vi;
 
 void Solve() {
     int n, k; cin>>n>>k;
-    vvi char_pos(k);
     string s; cin>>s;
-    for(int i = 0; i<n; i++){
-        char_pos[s[i]-'a'].push_back(i);
+    vvi nxt(k, vi(n+2, n+1));
+    for(int x = 0; x<k; x++){
+        for(int i = n-1; i>=0; i--){
+            nxt[x][i] = s[i] == 'a' + x? i+1: nxt[x][i+1];
+        }
+    } vi f(n+2);
+    for(int i = n; i>=0; i--){
+        f[i] = 1e18;
+        for(int x = 0; x<k; x++){
+            f[i] = min(f[i], 1 + f[nxt[x][i]]);
+        }
     }
     int q; cin>>q;
     while(q--){
-        int cur_idx = 0;
-        string S; cin>>S;
-        bool ok = true;
-        for(int i = 0; i<S.length(); i++){
-            int dist = lower_bound(char_pos[S[i]-'a'].begin(), char_pos[S[i]-'a'].end(), cur_idx+1) - char_pos[S[i]-'a'].begin();
-            // cout<<i+1<<" "<<dist<<" "<<cur_idx<<endl;
-
-            if(dist>=char_pos[S[i]-'a'].size()){
-                ok = false;
-                // cout<<"HI"<<endl;
-                cout<<0<<endl; break;
-            }
-            cur_idx = char_pos[S[i]-'a'][dist];
-            // cout<<"cur idx = "<<cur_idx<<endl;
+        string t; cin>>t;
+        int x = 0;
+        for(auto c: t){
+            x = nxt[c-'a'][x];
         }
-        if(ok){
-            int mn = 1e18;
-            for(int i = 0; i<k; i++){
-                int dist = distance(lower_bound(char_pos[i].begin(), char_pos[i].end(), cur_idx+1), char_pos[i].end());
-                cout<<dist<<" = dist"<<endl;
-                mn = min(mn, dist+1);
-            }
-            cout<<mn<<endl;
-        }
+        cout<<f[x]<<endl;
     }
-
+    return ;
 }
 
 int32_t main() {
