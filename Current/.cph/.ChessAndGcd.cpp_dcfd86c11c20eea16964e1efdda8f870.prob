@@ -1,0 +1,1 @@
+{"name":"Local: ChessAndGcd","url":"e:\\CDC_Finale\\Current\\ChessAndGcd.cpp","tests":[{"id":1747380557783,"input":"3\n3\n55 86 61 8 9 39 \n7\n35 68 51 23 66 61 85 34 2 65 64 6 7 32 \n3\n2 10 1 6 4 8","output":"654\n19318\n85"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\CDC_Finale\\Current\\ChessAndGcd.cpp","group":"local","local":true}

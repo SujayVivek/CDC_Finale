@@ -1,0 +1,1 @@
+{"name":"Local: DMagicNumbers","url":"e:\\CDC_Finale\\Current\\DMagicNumbers.cpp","tests":[{"id":1747642848688,"input":"3\n2 4\n10\n90\n3 9\n200\n300\n2 1\n10 \n90","output":"7\n3\n0"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\CDC_Finale\\Current\\DMagicNumbers.cpp","group":"local","local":true}

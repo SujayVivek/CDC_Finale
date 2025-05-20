@@ -1,0 +1,1 @@
+{"name":"Local: PalindromeInATree","url":"e:\\CDC_Finale\\Current\\PalindromeInATree.cpp","tests":[{"id":1747304727202,"input":"7\n5 4\n1 5\n6 3\n1 7\n5 6\n6 2\nabdaabc\n7\n1 1\n1 5\n1 3\n0 7 a\n1 1\n0 4 z\n1 5","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\CDC_Finale\\Current\\PalindromeInATree.cpp","group":"local","local":true}
