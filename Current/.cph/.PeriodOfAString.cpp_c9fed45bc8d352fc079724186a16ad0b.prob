@@ -1,0 +1,1 @@
+{"name":"Local: PeriodOfAString","url":"e:\\CDC_Finale\\Current\\PeriodOfAString.cpp","tests":[{"id":1747752670725,"input":"2\n9\nabababaab\n6\nffffff","output":"Test case #1\n4 2\n6 3\n\nTest case #2\n2 2\n3 3\n4 4\n5 5\n6 6"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\CDC_Finale\\Current\\PeriodOfAString.cpp","group":"local","local":true}

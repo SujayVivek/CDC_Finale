@@ -1,0 +1,1 @@
+{"name":"Local: LongestPalindromicSubstring","url":"e:\\CDC_Finale\\Current\\LongestPalindromicSubstring.cpp","tests":[{"id":1747754805934,"input":"2\n5\nabacd\n6\nabccba","output":"3\n6"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\CDC_Finale\\Current\\LongestPalindromicSubstring.cpp","group":"local","local":true}
