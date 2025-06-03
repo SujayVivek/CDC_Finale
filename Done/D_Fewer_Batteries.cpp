@@ -1,68 +1,68 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-#define mod 1000000007
 #define ff first
 #define ss second
-typedef vector<vector<long long>> vvi;
-typedef vector<long long> vi;
+typedef long long ll;
 #define int long long
 #define endl "\n"
 
-int n, m;
-vi b;
-vector<vector<pair<int, int>>> g;
+struct pair_hash {
+    size_t operator()(const pair<int,int> &p) const {
+        return std::hash<long long>()((p.first << 32) ^ p.second);
+    }
+};
+
+vector<vector<pair<int,int>>> g;
+vector<int> b;
 
 void Solve() {
+    int n, m;
     cin >> n >> m;
-    b.assign(n + 1, 0);
-    g.clear();
-    g.resize(n + 1);
-
-    for (int i = 1; i <= n; i++) cin >> b[i];
-
+    b.assign(n, 0);
+    for (int i = 0; i < n; i++) {
+        cin >> b[i];
+    }
+    g.assign(n+1, {});
     for (int i = 0; i < m; i++) {
         int u, v, w;
         cin >> u >> v >> w;
         g[u].push_back({v, w});
-        g[v].push_back({u, w});
     }
-
-    vector<int> maxBatteries(n + 1, 1e18);  // use 1e18 instead of 1e9 for safety with long long
-    maxBatteries[1] = 0;
-
-    // Min-heap: (distance traveled so far, current node, max edge weight used)
-    priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, greater<>> pq;
-    pq.push({0, 1, 0});
-
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+    pq.push({0, 1});
+    unordered_set<pair<int,int>, pair_hash> vis;
+    vis.reserve(m * 2);
     while (!pq.empty()) {
-        auto [dist, node, mx] = pq.top();
+        auto cur = pq.top();
         pq.pop();
-
-        for (auto [nn, w] : g[node]) {
-            int newDist = dist + b[node];
-            if (newDist > w && max(mx, w) < maxBatteries[nn]) {
-                int newMx = max(mx, w);
-                maxBatteries[nn] = newMx;
-                pq.push({newDist, nn, newMx});
+        int X = cur.ff, u = cur.ss;
+        if (u == n) {
+            cout << X << "\n";
+            return;
+        }
+        auto key = make_pair(u, X);
+        if (vis.find(key) != vis.end()) continue;
+        vis.insert(key);
+        for (auto &e : g[u]) {
+            int v = e.ff, w = e.ss;
+            if (X + b[u-1] < w) continue;
+            int X2 = max(X, (int)w);
+            auto key2 = make_pair(v, X2);
+            if (vis.find(key2) == vis.end()) {
+                pq.push({X2, v});
             }
         }
     }
-
-    if (maxBatteries[n] == 1e18) {
-        cout << -1 << endl;
-    } else {
-        cout << maxBatteries[n] << endl;
-    }
+    cout << -1 << "\n";
 }
 
 int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int tt_ = 1;
-    cin >> tt_;
-    while (tt_--) {
+    int t;
+    cin >> t;
+    while (t--) {
         Solve();
     }
     return 0;
