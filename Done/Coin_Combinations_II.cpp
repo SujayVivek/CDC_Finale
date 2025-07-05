@@ -9,25 +9,38 @@ typedef vector<long long> vi;
 #define endl "\n"
 
 void Solve() {
-    int n, x; cin>>n>>x;
-    vi c(n,0);
-    for(auto &a: c) cin>>a;
-    sort(c.begin(), c.end());
-    vvi dp(x+1, vi(n, 0));
-    // int latest = 0;
-    dp[0][0] = 1;
-    for(int i = 0; i<=x; i++){
-        for(int latest = 0; latest<n; latest++){
-            for(int j = latest; j<n; j++){
-                if(i + c[j]<=x) dp[i + c[j]][j] = (dp[i][latest])
+    int n, x;
+        cin >> n >> x;
+        vector<int> v(n);
+        for (auto &i : v)
+            cin >> i;
+        vector<vector<int>> dp(n, vector<int>(x + 1, 0));
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j <= x; j++)
+            {
+                if ((i == 0) && (j == 0))
+                {
+                    dp[i][j] = 1;
+                }
+                if (i > 0)
+                {
+                    dp[i][j] += dp[i - 1][j];
+                    dp[i][j] %= ((int)(1e9 + 7));
+                }
+                if ((j - v[i]) >= 0)
+                {
+                    dp[i][j] += dp[i][j - v[i]];
+                    dp[i][j] %= ((int)(1e9 + 7));
+                }
             }
         }
-    }
+        cout << dp[n - 1][x] << "\n";
 }
 
 int32_t main() {
     int tt_ = 1;
-    cin >> tt_;
+    // cin >> tt_;
     while (tt_--) {
         Solve();
     }
