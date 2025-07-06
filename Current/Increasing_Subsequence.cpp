@@ -12,18 +12,16 @@ void Solve() {
     int n; cin>>n;
     vi a(n,0);
     for(auto &x: a) cin>>x;
-    int s = accumulate(a.begin(), a.end(), 0LL);
-    vvi dp(n, vi(n, 0));
-    for(int l = n-1; l>=0; l--){
-        for(int r = l; r<=n-1; r++){
-            if(l==r){
-                dp[l][r] = a[l];
-            }else{
-                dp[l][r] = max(a[l] - dp[l+1][r], a[r] - dp[l][r-1]);
-            }
+
+    vi ans;
+    for(int i = 0; i<a.size(); i++){
+        if(ans.size()==0 || a[i]>ans.back()) ans.push_back(a[i]);
+        else{
+            auto it = lower_bound(ans.begin(), ans.end(), a[i]);
+            *it = a[i];
         }
     }
-    cout<< (s + dp[0][n-1])/2<<endl;
+    cout<<ans.size()<<endl;
 }
 
 int32_t main() {
