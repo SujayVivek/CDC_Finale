@@ -1,0 +1,1 @@
+{"name":"Local: lol","url":"e:\\CDC_Finale\\Current\\lol.cpp","tests":[{"id":1753034738712,"input":"1110110 1010111","output":""},{"id":1753034773214,"input":"1111000 1110000","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\CDC_Finale\\Current\\lol.cpp","group":"local","local":true}
